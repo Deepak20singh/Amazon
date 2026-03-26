@@ -31,3 +31,36 @@ class Solution {
     
     
 }
+
+
+
+
+bhai agar yeh op chahiye
+
+[DE, D, E, VD, VE, EV, DV, DVE, EVD, DEV, VED, EDV, V, VDE, ED]
+
+=== Code Execution Successful ===
+
+import java.util.*;
+
+class Main {
+    public static void per(String inp, String ans, Set<String> s){
+        
+        // 🔥 har step pe add
+        if(!ans.isEmpty()){
+            s.add(ans);
+        }
+
+        for(int i = 0; i < inp.length(); i++){
+            String remain = inp.substring(0,i) + inp.substring(i+1);
+            per(remain, ans + inp.charAt(i), s);
+        }
+    }
+
+    public static void main(String[] args) {
+        String s = "DEV";
+        Set<String> s1 = new HashSet<>();
+        per(s, "", s1);
+        System.out.println(s1);
+    }
+}
