@@ -37,3 +37,333 @@ int m = grid.length;
     }
 }
 
+
+
+https://leetcode.com/problems/max-area-of-island/
+
+
+
+class Solution {
+    public int maxAreaOfIsland(int[][] grid) {
+
+       int m=grid.length;
+       int n=grid[0].length;
+
+       int count=0;
+
+       for(int i=0;i<m;i++){
+        for(int j=0;j<n;j++){
+
+            if(grid[i][j]==1){
+                int area=dfs(grid,i,j);
+
+               count=Math.max(count, area);
+
+            }
+
+
+        }
+       } 
+       return count;
+    }
+
+    public int dfs(int[][] grid,int i,int j){
+         int m=grid.length;
+       int n=grid[0].length;
+
+          if (i < 0 || j < 0 || i >= m || j >= n || grid[i][j] == 0)
+            return 0;
+
+        grid[i][j]=0;
+        
+
+        return 1+dfs(grid,i-1,j)+dfs(grid,i,j-1)+dfs(grid,i,j+1)+dfs(grid,i+1,j);
+
+    
+    }
+}
+
+
+
+now must Do
+
+https://leetcode.com/problems/flood-fill/
+
+
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        int originalColor = image[sr][sc];
+
+        // edge case
+        if(originalColor == color) return image;
+
+        dfs(image, sr, sc, originalColor, color);
+
+        return image;
+    }
+    
+
+    public void dfs(int[][] image, int i, int j,int original,int color){
+         int m=image.length;
+        int n=image[0].length;
+       
+
+
+        if (i < 0 || j < 0 || i >= m || j >= n || image[i][j] !=original)
+            return;
+
+        image[i][j]=color;
+        dfs(image,i-1,j,original,color);
+        dfs(image,i,j-1,original,color);
+        dfs(image,i,j+1,original,color);
+        dfs(image,i+1,j,original,color);
+
+
+    }
+}
+
+
+https://leetcode.com/problems/surrounded-regions/
+
+class Solution {
+    public void solve(char[][] board) {
+        int m = board.length;
+        int n = board[0].length;
+
+        // Step 1: boundary DFS
+        for(int i = 0; i < m; i++) {
+            dfs(board, i, 0);
+            dfs(board, i, n-1);
+        }
+
+        for(int j = 0; j < n; j++) {
+            dfs(board, 0, j);
+            dfs(board, m-1, j);
+        }
+
+        // Step 2 & 3
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+
+                if(board[i][j] == 'O') {
+                    board[i][j] = 'X';
+                }
+                else if(board[i][j] == 'S') {
+                    board[i][j] = 'O';
+                }
+
+            }
+        }
+    }
+
+    public void dfs(char[][] board, int i, int j) {
+        int m = board.length;
+        int n = board[0].length;
+
+        if(i < 0 || j < 0 || i >= m || j >= n || board[i][j] != 'O')
+            return;
+
+        board[i][j] = 'S'; // mark safe
+
+        dfs(board, i+1, j);
+        dfs(board, i-1, j);
+        dfs(board, i, j+1);
+        dfs(board, i, j-1);
+    }
+}
+
+Word 
+
+https://leetcode.com/problems/word-search/description/
+
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        int m=board.length;
+        int n=board[0].length;
+        boolean ans=false;
+
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+
+                if(board[i][j]==word.charAt(0)){
+                    if(dfs(board,word,i,j,0)){
+                    return true;
+                    }
+
+
+                }
+            }
+        }
+        return false;
+    } 
+    public boolean dfs(char[][] board,String word,int i,int j,int index){
+int m=board.length;
+        int n=board[0].length;
+
+        if(index==word.length()){
+            return true;
+        }
+        if(i<0||j<0||i>=m||j>=n||board[i][j]!=word.charAt(index)){
+            return false;
+        }
+
+         char temp=board[i][j];
+         board[i][j]='#';
+
+        boolean found = dfs(board, word, i+1, j, index+1) ||
+                        dfs(board, word, i-1, j, index+1) ||
+                        dfs(board, word, i, j+1, index+1) ||
+                        dfs(board, word, i, j-1, index+1);
+
+        board[i][j]=temp;
+        return found;
+
+    }
+}
+
+
+
+
+
+Step 5: Most Important Questions (DO THESE 🔥)
+
+Ye kar liye toh 80% graph cover:
+
+Number of Islands
+Rotten Oranges
+Cycle Detection
+Topological Sort
+Course Schedule
+Shortest Path (BFS + Dijkstra)
+Clone Graph
+Bipartite Graph
+
+
+
+Graph Questions ke MAIN TYPES (Patterns)
+🟢 1. Traversal Problems (BFS / DFS)
+
+👉 Sirf graph ko explore karna
+
+Examples:
+
+Number of Islands
+Connected Components
+Flood Fill
+
+👉 Use:
+
+DFS (deep jaana ho)
+BFS (level-wise)
+🔵 2. Shortest Path Problems
+
+👉 Source se destination tak minimum distance
+
+Types:
+
+Unweighted → BFS
+Weighted → Dijkstra
+Negative weights → Bellman-Ford
+
+Examples:
+
+Shortest path in binary matrix
+Network delay time
+🟡 3. Cycle Detection
+
+👉 Graph me loop hai ya nahi?
+
+Types:
+
+Undirected → DFS (parent check)
+Directed → DFS (recursion stack)
+
+Examples:
+
+Detect cycle in graph
+Course Schedule (cycle check)
+🟣 4. Topological Sort (DAG)
+
+👉 Dependencies wale questions
+
+Use when:
+
+“pehle yeh karo, fir yeh”
+
+Examples:
+
+Course Schedule
+Task scheduling
+🟠 5. Connected Components / Provinces
+
+👉 Kitne groups hain graph me
+
+Examples:
+
+Number of Provinces
+Friend Circles
+🔴 6. Grid Based Graph (2D Matrix)
+
+👉 Hidden graph 😏
+
+Examples:
+
+Number of Islands
+Rotten Oranges
+Shortest path in grid
+
+👉 Mostly DFS / BFS
+
+⚫ 7. Bipartite Graph
+
+👉 Graph ko 2 groups me divide kar sakte ho?
+
+Examples:
+
+Check bipartite
+Possible bipartition
+
+👉 BFS / DFS + coloring
+
+⚡ 8. Minimum Spanning Tree (MST)
+
+👉 Minimum cost me graph connect karo
+
+Algorithms:
+
+Kruskal
+Prim
+🔥 9. Advanced (High Level)
+
+👉 Thoda tough / Amazon level
+
+Union-Find (DSU)
+Bridges & Articulation Points
+Strongly Connected Components (Kosaraju)
+Floyd Warshall
+🔥 FINAL SUMMARY (Yaad rakhna 👇)
+Type	Algorithm
+Traversal	BFS / DFS
+Shortest Path	BFS / Dijkstra
+Cycle	DFS
+Dependency	Topo Sort
+Grid	BFS / DFS
+Groups	DFS / DSU
+Bipartite	BFS/DFS + Color
+MST	Kruskal / Prim
+🧠 Real Interview Trick
+
+Question dekhte hi yeh soch:
+
+👉 “Yeh graph ka kaunsa pattern hai?”
+
+Grid → DFS/BFS
+Shortest → BFS/Dijkstra
+Dependency → Topo
+Loop → Cycle detection
+🚀 Bhai tera next level
+
+Ab tu yeh bata:
+👉 Main tujhe ek ek pattern ka best question + solution kara du?
+YA
+👉 Direct Amazon-level questions solve karna start kare? 😏
