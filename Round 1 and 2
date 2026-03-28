@@ -1,0 +1,126 @@
+//35 40 23 28 50 10
+import java.util.*;
+class main{
+    public static int[] find(int[] arr){
+        int[] ans=new int[arr.length];
+        Stack<Integer> s=new Stack<>();
+        for(int i=arr.length-1;i>=0;i--){
+            while(!s.isEmpty()&&arr[s.peek()]<=arr[i]){
+                s.pop();
+            }
+            if(s.isEmpty()){
+                ans[i]=0;
+            }else{
+                ans[i]=s.peek()-i;
+                }
+            s.push(i);
+        }
+        return ans;
+    }
+    public static void main(String args[]){
+     int[] arr={35,40,23,28,50,10};
+     int ans[]=find(arr);
+     for(int a:ans){
+     System.out.println(a);
+     }
+    }
+    
+}
+
+
+
+//[[1,2,3,2,4,2,4,2,4,6,2,4,6,2][2,5,4][2,6,2]]
+
+//[[1,2,3,2,4,2,4,2,4,6,2,4,6,2][2,5,4][2,6,2]]
+import java.util.*;
+
+class Main {
+
+    public static int[] find(List<List<int[]>> a) {
+
+        int[] ans = new int[a.size()];
+        int[] arr = a.get(0).get(0);
+
+        Map<Integer, List<Integer>> table = new HashMap<>();
+
+        // build map
+for (int i = 0; i < arr.length; i++) {
+    if (table.containsKey(arr[i])) {
+        table.get(arr[i]).add(i);
+    } else {
+        List<Integer> list = new ArrayList<>();
+        list.add(i);
+        table.put(arr[i], list);
+    }
+}
+        // process queries
+        for (int i = 1; i < a.size(); i++) {
+
+            int s = a.get(i).get(0)[0];
+            int e = a.get(i).get(0)[1];
+            int t = a.get(i).get(0)[2];
+
+            ans[i] = fun(table, s, e, t);
+        }
+
+        return ans;
+    }
+
+    public static int fun(Map<Integer, List<Integer>> map, int s, int e, int t) {
+
+        if (!map.containsKey(t)) return 0;
+
+        List<Integer> list = map.get(t);
+
+        int left = lower(list, s);
+        int right = upper(list, e);
+
+        return right - left;
+    }
+
+    // first index >= s
+    public static int lower(List<Integer> list, int s) {
+        int i = 0, j = list.size();
+
+        while (i < j) {
+            int mid = (i + j) / 2;
+
+            if (list.get(mid) >= s) j = mid;
+            else i = mid + 1;
+        }
+        return i;
+    }
+
+    // first index > e
+    public static int upper(List<Integer> list, int e) {
+        int i = 0, j = list.size();
+
+        while (i < j) {
+            int mid = (i + j) / 2;
+
+            if (list.get(mid) > e) j = mid;
+            else i = mid + 1;
+        }
+        return i;
+    }
+
+    public static void main(String args[]) {
+
+        List<List<int[]>> a = new ArrayList<>();
+
+        for (int i = 0; i < 3; i++) {
+            a.add(new ArrayList<>());
+        }
+
+        a.get(0).add(new int[]{1,2,3,2,4,2,4,2,4,6,2,4,6,2});
+        a.get(1).add(new int[]{2,5,4});
+        a.get(2).add(new int[]{2,6,2});
+
+        int[] ans = find(a);
+
+        for (int x : ans) {
+            System.out.println(x);
+        }
+    }
+}
+
