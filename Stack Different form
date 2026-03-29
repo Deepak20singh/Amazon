@@ -28,5 +28,249 @@ Trapping Rain Water
 
 
 
+<--Foundation-->
+
+VALID PARANTHESE
+
+mera wala
+
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> st=new Stack();
+        for(char c:s.toCharArray()){
+            if(c == '(' || c == '{' || c == '['){
+                st.push(c);
+            }
+            else{ 
+                if (st.isEmpty()) return false;
 
 
+                if((st.peek()=='{'&&c=='}')||(st.peek()=='('&&c==')')||(st.peek()=='['&&c==']'))
+                {
+                    st.pop();
+                }else {
+                    return false;   // 🔥 IMPORTANT FIX
+                }
+            }
+        } return st.isEmpty();
+    }
+}
+
+optimize;
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> st = new Stack<>();
+
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                st.push(')');
+            } else if (c == '{') {
+                st.push('}');
+            } else if (c == '[') {
+                st.push(']');
+            } else if (st.isEmpty() || st.pop() != c) { 
+                return false;
+            }
+        }
+        return st.isEmpty(); // 🔥 IMPORTANT
+    }
+}
+
+LONGEST VALID PARENTHESE
+https://leetcode.com/problems/longest-valid-parentheses/
+
+class Solution {
+    public int longestValidParentheses(String s) {
+        Stack<Integer> st = new Stack<>();
+        st.push(-1);
+
+        int maxLen=0;
+
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)=='('){
+                st.push(i);
+            }else{
+                st.pop();
+                if(st.isEmpty()){
+                    st.push(i);
+                }else{
+                    maxLen=Math.max(maxLen,i-st.peek());
+                }
+
+
+            }
+        }
+      return maxLen;
+      }
+}
+
+MIN STACK
+https://leetcode.com/problems/min-stack/submissions/1962558472/
+class MinStack {
+    private Stack<Integer> s;
+    private Stack<Integer> minS;
+    public MinStack() {
+        this.s=new Stack<>();
+        this.minS=new Stack<>();
+        this.minS.push(Integer.MAX_VALUE);
+    }
+    
+    public void push(int val) {
+        this.s.push(val);
+        int mini=Math.min(val,this.minS.peek());
+        this.minS.push(mini);
+    }
+    
+    public void pop() {
+       this.s.pop();
+        this.minS.pop();
+    }
+    
+    public int top() {
+       return this.s.peek();
+    }
+    
+    public int getMin() {
+       return this.minS.peek();
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(val);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
+
+NEXT GREATER ELEMENT
+https://leetcode.com/problems/next-greater-element-i/description/
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+           int[] arr = new int[nums1.length];
+
+        for (int i = 0; i < nums1.length; i++) {
+            int val = nums1[i];
+            int j;
+
+            // find position in nums2
+            for (j = 0; j < nums2.length; j++) {
+                if (nums2[j] == val) break;
+            }
+
+            // find next greater
+            int ans = -1;
+            for (int k = j + 1; k < nums2.length; k++) {
+                if (nums2[k] > val) {
+                    ans = nums2[k];
+                    break;
+                }
+            }
+
+            arr[i] = ans;
+        }
+        return arr;
+    }
+}
+
+optimal
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+           
+           Map<Integer,Integer> ans=new HashMap<>();
+           Stack<Integer> s=new Stack<>();
+           for(int num:nums2){
+            while(!s.isEmpty()&&s.peek()<num){
+                ans.put(s.pop(),num);
+            }
+            s.push(num);
+
+           }
+            int[] res = new int[nums1.length];
+        for (int i = 0; i < nums1.length; i++) {
+            res[i] = ans.getOrDefault(nums1[i], -1);
+        }
+
+        return res;
+
+
+       
+    }
+}
+
+DAILY TEMPERATURE
+https://leetcode.com/problems/daily-temperatures/
+class Solution {
+    public int[] dailyTemperatures(int[] temp) {
+        Stack<Integer> s=new Stack<>();
+        int[] ans=new int[temp.length];
+
+        for(int i=temp.length-1;i>=0;i--){
+            while(!s.isEmpty()&&temp[i]>=temp[s.peek()]){
+                s.pop();
+            }
+
+            if(s.isEmpty()){
+                ans[i]=0;
+
+            }else{
+                
+                    ans[i]=s.peek()-i;
+                }
+                s.push(i);
+            
+
+        }
+        return ans;
+    }
+}
+
+import java.util.*;
+
+class Solution {
+    public int[] dailyTemperatures(int[] temp) {
+        Deque<Integer> st = new ArrayDeque<>();
+        int[] ans = new int[temp.length];
+
+        for (int i = temp.length - 1; i >= 0; i--) {
+            while (!st.isEmpty() && temp[i] >= temp[st.peek()]) {
+                st.pop();
+            }
+
+            ans[i] = st.isEmpty() ? 0 : st.peek() - i;
+
+            st.push(i);
+        }
+        return ans;
+    }
+}
+
+https://leetcode.com/problems/online-stock-span/
+
+class StockSpanner {
+      private Stack<int[]> s;
+    private int ans=1;
+    public StockSpanner() {
+        this.s=new Stack<>();
+    }
+    
+    public int next(int price) {
+        int span=1;
+        while(!s.isEmpty()&&s.peek()[0]<=price){
+            span+=s.peek()[1];
+            s.pop();
+
+
+        }
+        s.push(new int[]{price,span});
+        return span;
+       
+    }
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner obj = new StockSpanner();
+ * int param_1 = obj.next(price);
+ */
