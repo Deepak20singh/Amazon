@@ -317,3 +317,134 @@ class Solution {
     }
 }
 
+
+DECODE STRING
+
+https://leetcode.com/problems/decode-string/submissions/1962800374/
+import java.util.*;
+
+class Solution {
+    public String decodeString(String s) {
+        Stack<Integer> numStack = new Stack<>();
+        Stack<String> strStack = new Stack<>();
+
+        String curr = "";
+        int num = 0;
+
+        for (char c : s.toCharArray()) {
+
+            if (Character.isDigit(c)) {
+                num = num * 10 + (c - '0');
+            }
+
+            else if (c == '[') {
+                numStack.push(num);
+                strStack.push(curr);
+
+                num = 0;
+                curr = "";
+            }
+
+            else if (c == ']') {
+                int times = numStack.pop();
+                String prev = strStack.pop();
+
+                StringBuilder temp = new StringBuilder(prev);
+                for (int i = 0; i < times; i++) {
+                    temp.append(curr);
+                }
+
+                curr = temp.toString();
+            }
+
+            else {
+                curr += c;
+            }
+        }
+
+        return curr;
+    }
+}
+
+SIMPLIFY PATH
+
+https://leetcode.com/problems/simplify-path/
+
+class Solution {
+    public String simplifyPath(String path) {
+        String[] arr = path.split("/");
+        Deque<String> s = new ArrayDeque<>();
+
+        String ans = "/";
+        for (String se : arr) {
+
+            if (se.length() == 0 || se.equals(".")) {
+                continue;
+            }
+
+            if (se.equals("..")) {
+                if (!s.isEmpty()) {  
+                    s.pop();
+                }
+            } else {
+                s.push(se);  
+            }
+        }
+
+        while (!s.isEmpty()) {
+            String i = s.removeLast();;   
+            ans = ans + i;
+            if (!s.isEmpty()) ans += "/";  
+        }
+
+        return ans;
+    }
+
+    // ❌ no longer needed, but keeping minimal change
+    public boolean check(String s) {
+        boolean ans = true;
+        for (char c : s.toCharArray()) {
+            if (c != '.') {
+                ans = false;
+            }
+        }
+        return ans;
+    }
+}
+
+optimal
+class Solution {
+    public String simplifyPath(String path) {
+        Deque<String> stack = new ArrayDeque<>();
+
+        for (String part : path.split("/")) {
+            if (part.equals("") || part.equals(".")) continue;
+            
+            if (part.equals("..")) {
+                if (!stack.isEmpty()) stack.removeLast();
+            } else {
+                stack.addLast(part);
+            }
+        }
+
+        StringBuilder res = new StringBuilder();
+        for (String dir : stack) {
+            res.append("/").append(dir);
+        }
+
+        return res.length() == 0 ? "/" : res.toString();
+    }
+}Time Complexity
+Step 1: Split → O(n)
+Step 2: Stack ops → O(n)
+Step 3: Build string (append)
+append() = O(1) amortized
+done n times
+
+➡️ O(n) ✅
+
+📦 Space Complexity
+Stack → O(n)
+Result → O(n)
+
+➡️ Total: O(n)
