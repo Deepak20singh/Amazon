@@ -448,3 +448,37 @@ Stack → O(n)
 Result → O(n)
 
 ➡️ Total: O(n)
+
+
+
+EVALUATE REVERSE POLISH NOTATION
+
+https://leetcode.com/problems/evaluate-reverse-polish-notation/submissions/1962856425/
+
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> a = new Stack<>();
+
+        for (String e : tokens) {
+            
+            if (!e.equals("+") && !e.equals("-") && !e.equals("*") && !e.equals("/")) {
+                a.push(Integer.parseInt(e));
+            } else {
+                int f = a.pop();
+                int s = a.pop();
+
+                if (e.equals("+")) {
+                    a.push(s + f);
+                } else if (e.equals("-")) {
+                    a.push(s - f);
+                } else if (e.equals("*")) {
+                    a.push(s * f);
+                } else if (e.equals("/")) {
+                    a.push(s / f);
+                }
+            }
+        }
+
+        return a.pop();
+    }
+}
