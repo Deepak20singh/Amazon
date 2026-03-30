@@ -89,4 +89,79 @@ class Solution {
     }
 }
 
+JUMP 2
+https://leetcode.com/problems/jump-game-ii/description/
 
+class Solution {
+    public int jump(int[] nums) {
+        int jumps = 0;
+        int currEnd = 0;
+        int currFarthest = 0;
+
+        for (int i = 0; i < nums.length - 1; i++) {
+            currFarthest = Math.max(currFarthest, i + nums[i]);
+
+            if (i == currEnd) {
+                jumps++;
+                currEnd = currFarthest;
+            }
+        }
+
+        return jumps;
+    }
+}
+
+
+GAS STATION
+
+Brute Force
+
+https://leetcode.com/problems/gas-station/
+class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int n = gas.length;
+
+        for (int start = 0; start < n; start++) {
+            int tank = 0;
+            boolean possible = true;
+
+            for (int i = 0; i < n; i++) {
+                int idx = (start + i) % n;
+                tank += gas[idx] - cost[idx];
+
+                if (tank < 0) {
+                    possible = false;
+                    break;
+                }
+            }
+
+            if (possible) return start;
+        }
+
+        return -1;
+    }
+}
+
+optimal
+class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int total = 0;   // overall check
+        int tank = 0;    // current fuel
+        int start = 0;   // answer (index)
+
+        for (int i = 0; i < gas.length; i++) {
+            int diff = gas[i] - cost[i];
+
+            total += diff;
+            tank += diff;
+
+            // agar yaha fail ho gaye
+            if (tank < 0) {
+                start = i + 1;  // next index se start
+                tank = 0;       // reset fuel
+            }
+        }
+
+        return total >= 0 ? start : -1;
+    }
+}
