@@ -1,6 +1,76 @@
-Activity Selection
-Fractional Knapsack
-Job Sequencing
+Tier 1 (MOST IMPORTANT — pehle yeh kar ⚡)
+
+👉 Ye 100% karne hi karne hai
+
 Jump Game
+Jump Game II
 Gas Station
 Candy
+Partition Labels
+
+👉 Agar sirf ye 5 kar liye → interview me greedy almost cover 🔥
+
+🟡 Tier 2 (Important but optional)
+
+👉 Time mila toh kar
+
+Non-overlapping Intervals
+Task Scheduler
+Minimum Number of Arrows to Burst Balloons
+🔴 Tier 3 (Bonus / advanced)
+
+👉 Sirf tab jab strong ho jaye
+
+Queue Reconstruction by Height
+IPO
+Assign Cookies
+Best Time to Buy and Sell Stock II
+Lemonade Change
+
+
+JUMP GAME
+
+https://leetcode.com/problems/jump-game/
+
+class Solution {
+    public boolean canJump(int[] nums) {
+        return helper(nums, 0);
+    }
+
+    public boolean helper(int[] nums, int i) {
+        if (i >= nums.length - 1) return true;
+
+        for (int jump = 1; jump <= nums[i]; jump++) {
+            if (helper(nums, i + jump)) return true;
+        }
+
+        return false;
+    }
+}
+
+BETTER
+
+class Solution {
+    int[] dp;
+
+    public boolean canJump(int[] nums) {
+        dp = new int[nums.length];
+        return helper(nums, 0);
+    }
+
+    public boolean helper(int[] nums, int i) {
+        if (i >= nums.length - 1) return true;
+
+        if (dp[i] != 0) return dp[i] == 1;
+
+        for (int jump = 1; jump <= nums[i]; jump++) {
+            if (helper(nums, i + jump)) {
+                dp[i] = 1;
+                return true;
+            }
+        }
+
+        dp[i] = -1;
+        return false;
+    }
+}
