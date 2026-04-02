@@ -74,3 +74,43 @@ class Solution {
     }
 }
 
+IPO
+
+https://leetcode.com/problems/ipo/
+class prod{
+    int cap;
+    int pro;
+    public prod(int cap,int pro){
+        this.pro=pro;
+        this.cap=cap;
+    }
+}
+
+class Solution {
+    public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
+        prod[] p=new prod[profits.length];
+        for(int i=0;i<p.length;i++){
+            p[i]=new prod(capital[i],profits[i]);
+        }
+        
+        Arrays.sort(p,(a,b)->a.cap-b.cap);
+        
+        
+        PriorityQueue<prod> maxpr=new PriorityQueue<>((a,b)->(b.pro-a.pro));
+        int sum=0,i=0;
+        while(k-- >0){
+            while(i<p.length&&p[i].cap<=w){
+                maxpr.add(p[i]);
+                i++;
+            }
+            if(maxpr.isEmpty()){break;}
+            else{
+                w=w+maxpr.poll().pro;
+            }
+            
+            
+        }
+        return w;
+        
+    }
+}
