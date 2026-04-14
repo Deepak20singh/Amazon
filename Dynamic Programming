@@ -81,3 +81,84 @@ class Solution {
 
     }
 }
+
+tabulization bottom up   memoization top down
+
+0-1 knapsack 
+https://www.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1?utm_source=chatgpt.com
+
+
+Brute Force 
+class Solution {
+    public int knapsack(int W, int val[], int wt[]) {
+       return solve(0,W,wt,val);
+        
+    }
+    public int solve(int i,int W, int wt[],int val[]){
+       if (i == wt.length) return 0;
+
+       
+        int notPick = solve(i + 1, W, wt, val);
+         int pick = 0;
+           if (wt[i] <= W) {
+            pick = val[i] + solve(i + 1, W - wt[i], wt, val);
+        }
+       return Math.max(pick, notPick);
+    }
+}
+
+
+DP (MEMOIZATION)
+class Solution {
+    public int knapsack(int W, int val[], int wt[]) {
+        int n = wt.length;
+        int[][] dp = new int[n][W + 1];
+
+        for (int[] row : dp) {
+            java.util.Arrays.fill(row, -1);
+        }
+
+       return solve(0,W,wt,val,dp);
+        
+    }
+    public int solve(int i,int W, int wt[],int val[],int[][] dp){
+       if (i == wt.length) return 0;
+
+        if (dp[i][W] != -1) return dp[i][W];
+
+       
+       
+        int notPick = solve(i + 1, W, wt, val,dp);
+         int pick = 0;
+           if (wt[i] <= W) {
+            pick = val[i] + solve(i + 1, W - wt[i], wt, val,dp);
+        }
+       return dp[i][W] = Math.max(pick, notPick);
+    }
+}
+
+
+Tabulation
+class Solution {
+
+    public int knapsack(int[] wt, int[] val, int W) {
+        int n = wt.length;
+        int[][] dp = new int[n + 1][W + 1];
+
+        for (int i = 1; i <= n; i++) {
+            for (int w = 0; w <= W; w++) {
+
+                if (wt[i - 1] <= w) {
+                    dp[i][w] = Math.max(
+                        val[i - 1] + dp[i - 1][w - wt[i - 1]],
+                        dp[i - 1][w]
+                    );
+                } else {
+                    dp[i][w] = dp[i - 1][w];
+                }
+            }
+        }
+
+        return dp[n][W];
+    }
+} 
