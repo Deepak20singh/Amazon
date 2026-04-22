@@ -217,3 +217,47 @@ w=4 → dp[4] = max(50, 50 + dp[0]) = 50
 dp = [0, 10, 10, 40, 50, 60]
 🎯 Final Answer
 dp[5] = 60 ✅
+
+
+TRAVELLING SALSEMAN PROBLEM
+
+https://www.geeksforgeeks.org/dsa/travelling-salesman-problem-using-dynamic-programming/
+
+class Solution {
+    public int tsp(int[][] cost) {
+        // code here
+        int n = cost.length;
+
+        int[][] dp=new int[n][1<<n];
+        
+        for(int[] j:dp){
+            Arrays.fill(j,-1);
+            
+        }
+        return costing(cost,1,0,dp);
+    }
+    public int costing(int[][] cost,int mask,int pos,int[][] dp){
+        int n = cost.length;
+
+        if (mask == (1 << n) - 1) {
+            return cost[pos][0];
+        }
+
+        if(dp[pos][mask]!=-1){
+            return dp[pos][mask];
+        }
+          int ans = Integer.MAX_VALUE;
+        for(int city=0;city<n;city++) {
+            if((mask&(1<<city))==0){
+                int newMask=(mask|(1<<city));
+                int newans=cost[pos][city]+costing(cost,newMask,city,dp);
+                ans=Math.min(ans,newans);
+            }
+        }
+        
+        return dp[pos][mask]=ans; 
+         
+        
+    }
+}
+
