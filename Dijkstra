@@ -1,0 +1,61 @@
+import java.util.*;
+
+class Pair {
+    int node, dist;
+
+    Pair(int n, int d) {
+        node = n;
+        dist = d;
+    }
+}
+
+class Main {
+
+    public static void dijkstra(int v, List<List<Pair>> graph, int src) {
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> a.dist - b.dist);
+
+        int[] dist = new int[v];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+
+        dist[src] = 0;
+        pq.add(new Pair(src, 0));
+
+        while (!pq.isEmpty()) {
+            Pair curr = pq.poll();
+
+            for (Pair neigh : graph.get(curr.node)) {
+                int newDist = curr.dist + neigh.dist;
+
+                if (newDist < dist[neigh.node]) {
+                    dist[neigh.node] = newDist;
+                    pq.add(new Pair(neigh.node, newDist));
+                }
+            }
+        }
+
+        System.out.println("Shortest distances from source:");
+        for (int i = 0; i < v; i++) {
+            System.out.println("Node " + i + " -> " + dist[i]);
+        }
+    }
+
+    public static void main(String[] args) {
+        int v = 4;
+
+        List<List<Pair>> graph = new ArrayList<>();
+
+        for (int i = 0; i < v; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        graph.get(0).add(new Pair(1, 2));
+        graph.get(0).add(new Pair(2, 5));
+        graph.get(1).add(new Pair(2, 1));
+        graph.get(1).add(new Pair(3, 3));
+        graph.get(2).add(new Pair(3, 2));
+
+        int src = 0;
+
+        dijkstra(v, graph, src);
+    }
+}
