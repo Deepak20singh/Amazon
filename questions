@@ -163,3 +163,70 @@ class Solution {
     return ans;
     }
 }
+
+
+ALL NODES DISTANCE K IN BINARY TREE
+
+
+https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/description/
+
+
+class Solution {
+    
+    public void build(TreeNode n, TreeNode p, Map<TreeNode, TreeNode> mp) {
+        if (n == null) return;
+
+        mp.put(n, p);
+        build(n.left, n, mp);   // ✔️ fix
+        build(n.right, n, mp);  // ✔️ fix
+    }
+
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        Map<TreeNode, TreeNode> parent = new HashMap<>();
+        build(root, null, parent);
+
+        Queue<TreeNode> q = new LinkedList<>();
+        Set<TreeNode> visit = new HashSet<>();
+
+        q.offer(target);
+        visit.add(target);
+
+        int dist = 0;
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+
+            if (dist == k) break;
+
+            for (int i = 0; i < size; i++) {
+                TreeNode cur = q.poll(); // ✔️ fix
+
+                if (cur.left != null && !visit.contains(cur.left)) {
+                    q.offer(cur.left);
+                    visit.add(cur.left);
+                }
+
+                if (cur.right != null && !visit.contains(cur.right)) {
+                    q.offer(cur.right);
+                    visit.add(cur.right);
+                }
+
+                if (parent.get(cur) != null && !visit.contains(parent.get(cur))) {
+                    q.offer(parent.get(cur));
+                    visit.add(parent.get(cur));
+                }
+            }
+
+            dist++;
+        }
+
+        List<Integer> ans = new ArrayList<>();
+        while (!q.isEmpty()) {
+            ans.add(q.poll().val);
+        }
+
+        return ans;
+    }
+}
+
+
