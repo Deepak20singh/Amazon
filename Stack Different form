@@ -482,3 +482,141 @@ class Solution {
         return a.pop();
     }
 }
+
+
+---------------------------Advanced------------------------------
+
+LARGEST RECTANGLE IN HISTOGRAM
+
+https://leetcode.com/problems/largest-rectangle-in-histogram/description/
+
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        Stack<Integer> s = new Stack<>();
+        int n = heights.length;
+        int maxArea = 0;
+
+        for (int i = 0; i <= n; i++) {
+
+             int h = (i == n) ? 0 : heights[i];
+
+             while (!s.isEmpty() && heights[s.peek()] > h) {
+
+                int height = heights[s.pop()];
+
+                 int width;
+
+                 if (s.isEmpty()) {
+                    width = i;
+                } else {
+                    width = i - s.peek() - 1;
+                }
+
+                int area = height * width;
+
+                   maxArea = Math.max(maxArea, area);
+            }
+
+              s.push(i);
+        }
+
+        return maxArea;
+    }
+}
+
+TRAPING RAIN WATER 
+
+
+
+https://leetcode.com/problems/trapping-rain-water/description/
+
+class Solution {
+    public int trap(int[] height) {
+        /*
+         * GALTI #1:
+         * Tumne right = 0 liya tha.
+         *
+         * Sahi:
+         * Right pointer array ke last index par hona chahiye.
+         */
+        int left = 0;
+        int right = height.length - 1;
+
+        int leftMax = 0;
+        int rightMax = 0;
+
+        int water = 0;
+
+        while (left < right) {
+
+            /*
+             * Agar left side ki height chhoti hai,
+             * to left side ka answer safely calculate kar sakte hain.
+             */
+            if (height[left] < height[right]) {
+
+                /*
+                 * Agar current height leftMax se badi ya equal hai,
+                 * to leftMax update karo.
+                 */
+                if (leftMax <= height[left]) {
+                    leftMax = height[left];
+                } else {
+                    /*
+                     * Warna current column ke upar itna paani rukega.
+                     */
+                    water += leftMax - height[left];
+                }
+
+                /*
+                 * GALTI #2:
+                 * Tum left++ karna bhool gaye the.
+                 */
+                left++;
+
+            } else {
+
+                /*
+                 * Right side process karo.
+                 */
+                if (rightMax <= height[right]) {
+                    rightMax = height[right];
+                } else {
+                    water += rightMax - height[right];
+                }
+
+                /*
+                 * GALTI #3:
+                 * Tum right-- karna bhool gaye the.
+                 */
+                right--;
+            }
+        }
+
+        return water;
+    }
+}
+
+Real Life Example
+
+Socho tumhare paas:
+
+5   2   4
+
+Visualization:
+
+|       |
+|       |
+|   _   |
+|  | |  |
+|__|_|__|
+  5 2 4
+Left boundary = 5
+Right boundary = 4
+Water level = min(5, 4) = 4
+
+Middle height = 2
+
+To trapped water:
+
+4 - 2 = 2
