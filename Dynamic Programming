@@ -334,3 +334,10 @@ public class Main {
         System.out.println("Maximum Profit: " + result);
     }
 }
+
+
+LONGEST PALINDROMIC SUBSTRING
+
+https://leetcode.com/problems/longest-palindromic-substring/
+
+
