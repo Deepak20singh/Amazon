@@ -340,4 +340,47 @@ LONGEST PALINDROMIC SUBSTRING
 
 https://leetcode.com/problems/longest-palindromic-substring/
 
+class Solution {
+    public String longestPalindrome(String s) {
+        int n = s.length();
+        boolean[][] dp = new boolean[n][n];
 
+        int maxLen = 1;
+        int start = 0;
+
+        // i ko end se start ki taraf chala rahe hain
+        for (int i = n - 1; i >= 0; i--) {
+
+            // ❌ Tumhari galti:
+            // for (int j = i; j < n; i++)
+            // Yahan i++ likh diya tha. Isse infinite loop ho jayega.
+            // ✅ Correct:
+            for (int j = i; j < n; j++) {
+
+                // Agar outer characters same hain aur
+                // substring chhoti hai (length <= 3) ya
+                // inner substring palindrome hai
+                if (s.charAt(i) == s.charAt(j) &&
+                    (j - i <= 2 || dp[i + 1][j - 1])) {
+
+                    dp[i][j] = true;
+
+                    // Longest palindrome update
+                    if (j - i + 1 > maxLen) {
+                        maxLen = j - i + 1;
+                        start = i;
+                    }
+                }
+            }
+        }
+
+        // ❌ Tumhari galti:
+        // return s.substring(st, maxlen - st);
+        //
+        // Java me substring(start, endExclusive) hota hai.
+        // End index = start + length
+        //
+        // ✅ Correct:
+        return s.substring(start, start + maxLen);
+    }
+}
