@@ -623,3 +623,58 @@ Middle height = 2
 To trapped water:
 
 4 - 2 = 2
+
+------------------------------------------------------------------------------------------------------------
+
+Bhai ye Sliding Window Maximum wala famous question hai.
+
+Example:
+
+nums = [1,3,-1,-3,5,3,6,7]
+k = 3
+
+Windows:
+
+[1,3,-1]  -> 3
+[3,-1,-3] -> 3
+[-1,-3,5] -> 5
+[-3,5,3]  -> 5
+[5,3,6]   -> 6
+[3,6,7]   -> 7
+
+Output:
+
+[3,3,5,5,6,7]
+
+
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+
+        Deque<Integer> dq = new ArrayDeque<>();
+        int[] ans = new int[nums.length - k + 1];
+        int idx = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+
+            // remove out-of-window indices
+            while (!dq.isEmpty() && dq.peekFirst() <= i - k) {
+                dq.pollFirst();
+            }
+
+            // maintain decreasing order
+            while (!dq.isEmpty() &&
+                   nums[dq.peekLast()] <= nums[i]) {
+                dq.pollLast();
+            }
+
+            dq.offerLast(i);
+
+            // first window complete
+            if (i >= k - 1) {
+                ans[idx++] = nums[dq.peekFirst()];
+            }
+        }
+
+        return ans;
+    }
+}
