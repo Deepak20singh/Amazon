@@ -251,6 +251,9 @@ class Solution {
 ONLINE STOCK PLAN 
 https://leetcode.com/problems/online-stock-span/
 
+
+
+do chizen hai stack me  price aur span                                           fav
 class StockSpanner {
       private Stack<int[]> s;
     private int ans=1;
