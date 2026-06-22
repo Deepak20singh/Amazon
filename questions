@@ -373,7 +373,73 @@ class Solution {
     }
 }
 
+
+
 https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/
 
 
+public class Codec {
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        dfsSerialize(root, sb);
+        return sb.toString();
+    }
+
+    private void dfsSerialize(TreeNode node, StringBuilder sb) {
+        if (node == null) {
+            sb.append("N,");
+            return;
+        }
+
+        sb.append(node.val).append(",");
+        dfsSerialize(node.left, sb);
+        dfsSerialize(node.right, sb);
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        String[] nodes = data.split(",");
+        int[] idx = new int[1];
+        return dfsDeserialize(nodes, idx);
+    }
+
+    private TreeNode dfsDeserialize(String[] nodes, int[] idx) {
+        if (nodes[idx[0]].equals("N")) {
+            idx[0]++;
+            return null;
+        }
+
+        TreeNode root = new TreeNode(Integer.parseInt(nodes[idx[0]++]));
+
+        root.left = dfsDeserialize(nodes, idx);
+        root.right = dfsDeserialize(nodes, idx);
+
+        return root;
+    }
+}
+
 https://leetcode.com/problems/sum-root-to-leaf-numbers/description/
+
+class Solution {
+    public int sumNumbers(TreeNode root) {
+        return dfs(root, 0);
+    }
+
+    private int dfs(TreeNode node, int current) {
+        if (node == null) {
+            return 0;
+        }
+
+        current = current * 10 + node.val;
+
+        // Leaf node
+        if (node.left == null && node.right == null) {
+            return current;
+        }
+
+        return dfs(node.left, current)
+             + dfs(node.right, current);
+    }
+}
