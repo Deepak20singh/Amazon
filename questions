@@ -443,3 +443,67 @@ class Solution {
              + dfs(node.right, current);
     }
 }
+
+
+MOST ACCHA
+
+class Solution {
+
+    Map<TreeNode, TreeNode> parent = new HashMap<>();
+    List<TreeNode> nodes = new ArrayList<>();
+    List<List<Integer>> ans = new ArrayList<>();
+
+    public List<List<Integer>> findPaths(TreeNode root, int k) {
+
+        buildParent(root, null);
+
+        for (TreeNode node : nodes) {
+            dfs(node, null, 0, k, new ArrayList<>());
+        }
+
+        return ans;
+    }
+
+    private void buildParent(TreeNode node, TreeNode par) {
+
+        if (node == null) return;
+
+        parent.put(node, par);
+        nodes.add(node);
+
+        buildParent(node.left, node);
+        buildParent(node.right, node);
+    }
+
+    private void dfs(TreeNode curr,
+                     TreeNode prev,
+                     long sum,
+                     int k,
+                     List<Integer> path) {
+
+        if (curr == null) return;
+
+        path.add(curr.val);
+        sum += curr.val;
+
+        if (sum == k) {
+            ans.add(new ArrayList<>(path));
+        }
+
+        if (curr.left != null && curr.left != prev) {
+            dfs(curr.left, curr, sum, k, path);
+        }
+
+        if (curr.right != null && curr.right != prev) {
+            dfs(curr.right, curr, sum, k, path);
+        }
+
+        TreeNode par = parent.get(curr);
+
+        if (par != null && par != prev) {
+            dfs(par, curr, sum, k, path);
+        }
+
+        path.remove(path.size() - 1); // backtrack
+    }
+}
