@@ -1,163 +1,97 @@
-Haan bhai, Arrays ek bahut bada topic hai. Jo maine pehle bataye the wo sirf "must know" the. Agar kisi SDE-1 interview me Arrays se puchna ho to ye patterns bhi aane chahiye:
+Bilkul bhai. Agar SDE-1 ke liye Array patterns cover karne hain to main har pattern ke 2-3 representative questions deta hoon. Inko kar liya to kaafi coverage ho jayegi.
 
-## 1. Prefix Sum
+## 1. Two Pointers
 
-* Subarray Sum Equals K
-* Count Subarrays with Sum 0
-* Continuous Subarray Sum
-* Range Sum Query
+Easy → Medium
 
-Pattern:
-
-```text
-prefixSum + HashMap
-```
+1. Two Sum II
+2. Remove Duplicates from Sorted Array
+3. Container With Most Water
+4. 3Sum
 
 ---
 
 ## 2. Sliding Window
 
-* Maximum Sum Subarray of Size K
-* Longest Substring Without Repeating Characters
-* Maximum Consecutive Ones III
-* Minimum Size Subarray Sum
-
-Pattern:
-
-```text
-expand window
-shrink window
-```
+1. Maximum Average Subarray I
+2. Longest Repeating Character Replacement
+3. Permutation in String
 
 ---
 
-## 3. Two Pointers
+## 3. Prefix Sum + HashMap
 
-* Two Sum II
-* Container With Most Water
-* Remove Duplicates from Sorted Array
-* Move Zeroes
-* 3Sum
-
-Pattern:
-
-```text
-left++
-right--
-```
+1. Subarray Sum Equals K
+2. Continuous Subarray Sum
+3. Contiguous Array
 
 ---
 
-## 4. Kadane Pattern
+## 4. Kadane
 
-* Maximum Subarray
-* Maximum Circular Subarray
-
-Pattern:
-
-```text
-currentSum
-maxSum
-```
+1. Maximum Subarray
+2. Maximum Sum Circular Subarray
 
 ---
 
-## 5. Sorting Based
+## 5. Binary Search
 
-* Merge Intervals
-* Meeting Rooms
-* Minimum Platforms
-* Largest Number
-
-Pattern:
-
-```text
-sort first
-then process
-```
+1. Binary Search
+2. Find First and Last Position of Element in Sorted Array
+3. Search in Rotated Sorted Array
 
 ---
 
-## 6. HashMap / Frequency
+## 6. Merge Intervals
 
-* Two Sum
-* Majority Element
-* Top K Frequent Elements
-* Longest Consecutive Sequence
-
-Pattern:
-
-```text
-frequency counting
-```
+1. Merge Intervals
+2. Insert Interval
+3. Non-overlapping Intervals
 
 ---
 
-## 7. Binary Search on Array
+## 7. Matrix
 
-* Search Insert Position
-* Search in Rotated Sorted Array
-* Find Peak Element
-* First and Last Position
-
-Pattern:
-
-```text
-low mid high
-```
+1. Set Matrix Zeroes
+2. Spiral Matrix
+3. Rotate Image
 
 ---
 
-## 8. Matrix Questions (2D Arrays)
+## 8. Greedy
 
-Bahut companies arrays ke naam pe matrix puch leti hain.
-
-* Set Matrix Zeroes
-* Rotate Matrix
-* Spiral Matrix
-* Search in 2D Matrix
-* Flood Fill
+1. Jump Game
+2. Jump Game II
+3. Gas Station
 
 ---
 
-## 9. Greedy Arrays
+## 9. Monotonic Stack
 
-* Jump Game
-* Gas Station
-* Candy
+1. Next Greater Element I
+2. Daily Temperatures
+3. Largest Rectangle in Histogram
 
 ---
 
-## 10. Interview Favourite Questions
+## 10. Heap
 
-Agar mujhe kisi ko sirf Arrays ke 15 questions dene ho to:
+1. Kth Largest Element in an Array
+2. Top K Frequent Elements
+
+### Agar Amazon SDE-1 target hai to ye order follow kar:
 
 1. Two Sum
-2. Best Time to Buy and Sell Stock
-3. Contains Duplicate
-4. Product of Array Except Self
-5. Maximum Subarray (Kadane)
-6. Subarray Sum Equals K
-7. Count Subarrays with Sum 0
-8. Longest Consecutive Sequence
-9. Move Zeroes
-10. Container With Most Water
-11. 3Sum
-12. Merge Intervals
-13. Search in Rotated Sorted Array
-14. Find Peak Element
-15. Rotate Matrix
+2. Remove Duplicates
+3. Container With Most Water
+4. Maximum Subarray
+5. Subarray Sum Equals K
+6. Search in Rotated Sorted Array
+7. Merge Intervals
+8. Set Matrix Zeroes
+9. Jump Game
+10. Daily Temperatures
+11. Top K Frequent Elements
+12. 3Sum
 
-Ye 15 kar liye aur unke patterns samajh liye to array category ka lagbhag 70-80% interview coverage ho jata hai.
-
-Aur ek secret bataun: Interviewer question nahi dekhte, **pattern dekhte hain**. Arrays me asli patterns bas:
-
-* Prefix Sum
-* HashMap
-* Sliding Window
-* Two Pointers
-* Binary Search
-* Sorting
-* Kadane
-
-Ye 7 patterns strong ho gaye to naye array questions bhi solve hone lagte hain.
+Ye 12 questions ache se samajh liye, dry run kar liye, aur code likh liya to Array section ka base kaafi strong ho jayega.
