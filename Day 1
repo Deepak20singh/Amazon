@@ -9,7 +9,7 @@ class Solution {
 
         Map<Integer, Integer> map = new HashMap<>();
 
-        map.put(0, 1); // important
+        map.put(0, 1); // important    Array start hone se pehle ek prefix sum 0 already exist karta hai."
 
         int sum = 0;
         int count = 0;
