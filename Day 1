@@ -1,23 +1,29 @@
-https://leetcode.com/problems/merge-sorted-array/
-
-sOLUTION
-
-Brute force 
 
 
-import java.util.*;
+https://leetcode.com/problems/subarray-sum-equals-k/submissions/2044925142/
+
+
 class Solution {
-    public void merge(int[] nums1, int m, int[] nums2, int n) {
-   for(int i=m;i<(m+n);i++){
-    nums1[i]=nums2[i-m];
-    
-   }
-   Arrays.sort(nums1);
-System.out.println(nums1);
-   
-   
+    public int subarraySum(int[] nums, int k) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        map.put(0, 1); // important
+
+        int sum = 0;
+        int count = 0;
+
+        for (int num : nums) {
+
+            sum += num;
+
+            if (map.containsKey(sum - k)) {
+                count += map.get(sum - k);
+            }
+
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+        }
+
+        return count;
     }
 }
-
-
-
